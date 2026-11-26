@@ -1,0 +1,6 @@
+menu:
+    item:
+        link_required: "Choisissez une destination."
+        url_invalid: "Une adresse commence par https://, mailto: ou / (une page du site)."
+        label_required: "Un lien vers une adresse a besoin d'un libellé."
+        label_too_long: "Un libellé fait 100 caractères au plus."

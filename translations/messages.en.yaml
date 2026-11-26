@@ -1,0 +1,31 @@
+menu:
+    ui:
+        menus: Menus
+        menu: menu
+        new_menu: New menu
+        edit_menu: Edit the menu
+    menu:
+        index: Menus
+        zone: Zone
+        zone_help: "Where the site shows this menu."
+        title: Title
+        title_help: "Shown above the links (a footer column). Not needed for the main menu."
+        position: Order
+        position_help: "Among the menus of the same zone: smallest first."
+        items: Links
+        items_help: "In display order. A link to a page offline or deleted disappears from the site, without an error."
+        item_count: Links
+    item:
+        link: Destination
+        link_placeholder: "Choose…"
+        url_choice: "An address (typed in)"
+        url: Address
+        url_placeholder: "https://…, mailto:… or /path"
+        label: Label
+        label_placeholder: "Empty: the destination's name"
+        add: Add a link
+        up: Move up
+        down: Move down
+        remove: Remove
+    link:
+        routes: Site pages

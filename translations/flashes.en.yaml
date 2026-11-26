@@ -1,0 +1,3 @@
+domain_refusal:
+    unknown_zone_exception: "The site has no menu zone “%zone%”."
+    zone_taken_exception: "A menu already fills this zone: edit its links rather than adding a second one."

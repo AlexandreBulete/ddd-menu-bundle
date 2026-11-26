@@ -1,0 +1,6 @@
+menu:
+    item:
+        link_required: "Choose a destination."
+        url_invalid: "An address starts with https://, mailto: or / (a page of the site)."
+        label_required: "A link to an address needs a label."
+        label_too_long: "A label has 100 characters at most."

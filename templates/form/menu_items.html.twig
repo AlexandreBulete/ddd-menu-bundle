@@ -1,0 +1,67 @@
+{# The links of a menu: one row per link, added, removed and moved here.
+   On submit the rows are renumbered in screen order, so the order seen is
+   the order saved. Without JavaScript the existing rows still edit. #}
+{% block ddd_menu_links_row %}
+    <div class="mb-3 field ddd-menu-links" data-ddd-menu-links>
+        {{ form_label(form) }}
+        {{ form_help(form) }}
+        {{ form_errors(form) }}
+        <div class="ddd-menu-links__rows" data-rows data-prototype="{{ form_row(form.vars.prototype)|e('html_attr') }}" data-index="{{ form|length > 0 ? form|keys|last + 1 : 0 }}">
+            {% for child in form %}{{ form_row(child) }}{% endfor %}
+        </div>
+        <button type="button" class="btn btn-outline-primary btn-sm" data-add>+ {{ 'menu.item.add'|trans }}</button>
+    </div>
+    {% do form.setRendered %}
+    <style>
+        .ddd-menu-item { display: grid; grid-template-columns: minmax(180px, 2fr) minmax(140px, 1.4fr) minmax(140px, 1.4fr) auto; gap: 8px; align-items: start; padding: 10px; margin: 8px 0; border: 1px solid var(--tblr-border-color); border-radius: 8px; background: var(--tblr-bg-surface); }
+        .ddd-menu-item .mb-3 { margin: 0 !important; }
+        .ddd-menu-item label { font-size: 12px; margin-bottom: 2px; }
+        .ddd-menu-item[data-kind]:not([data-kind="url"]) .ddd-menu-item__url { visibility: hidden; }
+        .ddd-menu-item__tools { display: flex; gap: 4px; padding-top: 22px; }
+        @media (max-width: 760px) { .ddd-menu-item { grid-template-columns: 1fr; } .ddd-menu-item__tools { padding-top: 0; } }
+    </style>
+    <script>
+    (() => {
+        const root = document.currentScript.previousElementSibling.previousElementSibling;
+        const rows = root.querySelector('[data-rows]');
+        const kind = (row) => { const s = row.querySelector('select'); row.dataset.kind = s && s.value === 'url' ? 'url' : (s && s.value ? 'link' : ''); };
+        rows.querySelectorAll('.ddd-menu-item').forEach(kind);
+        root.querySelector('[data-add]').addEventListener('click', () => {
+            const index = Number(rows.dataset.index);
+            rows.dataset.index = String(index + 1);
+            rows.insertAdjacentHTML('beforeend', rows.dataset.prototype.replace(/__name__label__/g, '').replace(/__name__/g, String(index)));
+            const row = rows.lastElementChild;
+            kind(row);
+            row.querySelector('select')?.focus();
+        });
+        rows.addEventListener('change', (e) => { const row = e.target.closest('.ddd-menu-item'); if (row) kind(row); });
+        rows.addEventListener('click', (e) => {
+            const button = e.target.closest('[data-move], [data-remove]');
+            if (!button) return;
+            const row = button.closest('.ddd-menu-item');
+            if (button.hasAttribute('data-remove')) row.remove();
+            else if (button.dataset.move === 'up' && row.previousElementSibling) row.parentNode.insertBefore(row, row.previousElementSibling);
+            else if (button.dataset.move === 'down' && row.nextElementSibling) row.parentNode.insertBefore(row.nextElementSibling, row);
+        });
+        root.closest('form')?.addEventListener('submit', () => {
+            [...rows.children].forEach((row, i) => row.querySelectorAll('[name]').forEach((field) => {
+                field.name = field.name.replace(/\[items\]\[\d+\]/, `[items][${i}]`);
+            }));
+        });
+    })();
+    </script>
+{% endblock %}
+
+{% block ddd_menu_item_row %}
+    <div class="ddd-menu-item">
+        <div>{{ form_row(form.link) }}</div>
+        <div class="ddd-menu-item__url">{{ form_row(form.url) }}</div>
+        <div>{{ form_row(form.label) }}</div>
+        <div class="ddd-menu-item__tools">
+            <button type="button" class="btn btn-sm btn-ghost-secondary" data-move="up" aria-label="{{ 'menu.item.up'|trans }}">↑</button>
+            <button type="button" class="btn btn-sm btn-ghost-secondary" data-move="down" aria-label="{{ 'menu.item.down'|trans }}">↓</button>
+            <button type="button" class="btn btn-sm btn-ghost-danger" data-remove aria-label="{{ 'menu.item.remove'|trans }}">✕</button>
+        </div>
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}

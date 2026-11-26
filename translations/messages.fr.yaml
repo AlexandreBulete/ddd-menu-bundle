@@ -1,0 +1,31 @@
+menu:
+    ui:
+        menus: Menus
+        menu: menu
+        new_menu: Nouveau menu
+        edit_menu: Modifier le menu
+    menu:
+        index: Menus
+        zone: Emplacement
+        zone_help: "Où le site affiche ce menu."
+        title: Titre
+        title_help: "Affiché au-dessus des liens (une colonne du pied de page). Inutile pour le menu principal."
+        position: Ordre
+        position_help: "Parmi les menus du même emplacement : le plus petit d'abord."
+        items: Liens
+        items_help: "Dans l'ordre d'affichage. Un lien vers une page hors ligne ou supprimée disparaît du site, sans erreur."
+        item_count: Liens
+    item:
+        link: Destination
+        link_placeholder: "Choisir…"
+        url_choice: "Une adresse (à saisir)"
+        url: Adresse
+        url_placeholder: "https://…, mailto:… ou /chemin"
+        label: Libellé
+        label_placeholder: "Vide : le nom de la destination"
+        add: Ajouter un lien
+        up: Monter
+        down: Descendre
+        remove: Retirer
+    link:
+        routes: Pages du site
