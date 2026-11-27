@@ -14,6 +14,8 @@ use AlexandreBulete\DddMenuBundle\Infrastructure\Sylius\State\Processor\DeleteMe
 use AlexandreBulete\DddMenuBundle\Infrastructure\Sylius\State\Processor\UpdateMenuProcessor;
 use AlexandreBulete\DddMenuBundle\Infrastructure\Sylius\State\Provider\MenuItemProvider;
 use AlexandreBulete\DddMenuBundle\Infrastructure\Symfony\Form\MenuType;
+use AlexandreBulete\DddSyliusBundle\Admin\View\AdminRecordInterface;
+use AlexandreBulete\DddSyliusBundle\Admin\View\StatusBadge;
 use Sylius\Resource\Metadata\AsResource;
 use Sylius\Resource\Metadata\Create;
 use Sylius\Resource\Metadata\Delete;
@@ -43,7 +45,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
         new Index(grid: MenuGrid::NAME),
     ],
 )]
-final class MenuResource implements ResourceInterface
+final class MenuResource implements ResourceInterface, AdminRecordInterface
 {
     public const string URL_CHOICE = LinkTarget::URL;
 
@@ -136,5 +138,20 @@ final class MenuResource implements ResourceInterface
             itemCount: count($items),
             updatedAt: $menu->updatedAt,
         );
+    }
+
+    public function adminLabel(): ?string
+    {
+        return $this->title !== null && $this->title !== '' ? $this->title : $this->zoneLabel;
+    }
+
+    public function adminStatus(): ?StatusBadge
+    {
+        return null;
+    }
+
+    public function adminPublicUrl(): ?string
+    {
+        return null;
     }
 }

@@ -1,4 +1,7 @@
 menu:
+    section:
+        menu: "The menu"
+        placement: "Placement"
     ui:
         menus: Menus
         menu: menu

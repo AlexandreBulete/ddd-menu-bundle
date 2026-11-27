@@ -23,23 +23,27 @@ final class MenuType extends AbstractType
     {
         $builder
             ->add('zone', ChoiceType::class, [
+                'section' => 'placement',
                 'label' => 'menu.menu.zone',
                 'help' => 'menu.menu.zone_help',
                 'choices' => $this->zones->choices(),
                 'choice_translation_domain' => 'messages',
             ])
             ->add('title', TextType::class, [
+                'section' => 'menu',
                 'label' => 'menu.menu.title',
                 'help' => 'menu.menu.title_help',
                 'required' => false,
                 'empty_data' => '',
             ])
             ->add('position', IntegerType::class, [
+                'section' => 'placement',
                 'label' => 'menu.menu.position',
                 'help' => 'menu.menu.position_help',
                 'empty_data' => '0',
             ])
             ->add('items', MenuLinksType::class, [
+                'section' => 'menu',
                 'label' => 'menu.menu.items',
                 'help' => 'menu.menu.items_help',
                 'required' => false,
@@ -48,6 +52,12 @@ final class MenuType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => MenuResource::class]);
+        $resolver->setDefaults([
+            'data_class' => MenuResource::class,
+            'sections' => [
+                'menu' => ['label' => 'menu.section.menu'],
+                'placement' => ['label' => 'menu.section.placement', 'column' => 'side'],
+            ],
+        ]);
     }
 }

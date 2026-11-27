@@ -13,12 +13,16 @@
     </div>
     {% do form.setRendered %}
     <style>
-        .ddd-menu-item { display: grid; grid-template-columns: minmax(180px, 2fr) minmax(140px, 1.4fr) minmax(140px, 1.4fr) auto; gap: 8px; align-items: start; padding: 10px; margin: 8px 0; border: 1px solid var(--tblr-border-color); border-radius: 8px; background: var(--tblr-bg-surface); }
+        /* Destination and label side by side; the address, for a typed one only, on its own line below. */
+        .ddd-menu-item { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; grid-template-areas: "link label tools" "url url tools"; gap: 8px 12px; align-items: start; padding: 10px; margin: 8px 0; border: 1px solid var(--tblr-border-color); border-radius: 8px; background: var(--tblr-bg-surface); }
+        .ddd-menu-item > :nth-child(1) { grid-area: link; }
+        .ddd-menu-item__url { grid-area: url; }
+        .ddd-menu-item > :nth-child(3) { grid-area: label; }
+        .ddd-menu-item__tools { grid-area: tools; display: flex; gap: 4px; padding-top: 22px; }
         .ddd-menu-item .mb-3 { margin: 0 !important; }
         .ddd-menu-item label { font-size: 12px; margin-bottom: 2px; }
-        .ddd-menu-item[data-kind]:not([data-kind="url"]) .ddd-menu-item__url { visibility: hidden; }
-        .ddd-menu-item__tools { display: flex; gap: 4px; padding-top: 22px; }
-        @media (max-width: 760px) { .ddd-menu-item { grid-template-columns: 1fr; } .ddd-menu-item__tools { padding-top: 0; } }
+        .ddd-menu-item[data-kind]:not([data-kind="url"]) .ddd-menu-item__url { display: none; }
+        @media (max-width: 760px) { .ddd-menu-item { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "link tools" "url url" "label label"; } }
     </style>
     <script>
     (() => {
